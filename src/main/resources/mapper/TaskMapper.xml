@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.gracenam.todoapi.task.mapper.TaskMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into task (title, contents, registerd_date, task_type, task_status)
+        values (#{title}, #{contents}, now(), #{taskType}, #{taskStatus})
+    </insert>
+
+    <update id="update">
+        update task
+        set title=#{updateParam.title},
+            contents=#{updateParam,contents},
+            task_type=#{updateParam.taskType},
+            task_status=#{updateParam.taskStatus}
+        where id=#{id}
+    </update>
+
+    <select id="findByContents" resultType="Task">
+        select *
+        from task
+        where contents like concat('%', #{searchParam.contents}, '%')
+    </select>
+
+    <delete id="delete">
+        delete from task where id=#{id}
+    </delete>
+
+</mapper>
