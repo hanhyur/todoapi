@@ -1,0 +1,42 @@
+= REST Docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+[[ToDo]]
+== ToDo API
+
+[[Task_생성]]
+=== Task 생성
+==== Request
+include::{snippets}/createTask/http-request.adoc[]
+==== Response
+include::{snippets}/createTask/http-response.adoc[]
+
+[[Task_조회]]
+=== Task 조회
+==== Request
+include::{snippets}/createTask/http-request.adoc[]
+==== Response
+include::{snippets}/createTask/http-response.adoc[]
+
+[[Task_수정]]
+=== Task 수정
+==== Request
+include::{snippets}/createTask/http-request.adoc[]
+==== Response
+include::{snippets}/createTask/http-response.adoc[]
+
+[[Task_삭제]]
+=== Task 삭제
+==== Request
+include::{snippets}/createTask/http-request.adoc[]
+==== Response
+include::{snippets}/createTask/http-response.adoc[]

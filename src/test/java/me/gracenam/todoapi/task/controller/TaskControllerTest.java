@@ -10,11 +10,13 @@ import me.gracenam.todoapi.task.service.TaskService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -22,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureRestDocs
 class TaskControllerTest {
 
     @Autowired
@@ -42,6 +45,7 @@ class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(taskInput)))
                 .andDo(print())
+                .andDo(document("createTask"))
                 .andExpect(status().isOk());
     }
 
@@ -55,6 +59,7 @@ class TaskControllerTest {
 
         mockMvc.perform(get("/api/todo/{id}", id))
                 .andDo(print())
+                .andDo(document("findTask"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("title").value("Test Task"))
                 .andExpect(jsonPath("contents").value("This Task is Testing Content"));
