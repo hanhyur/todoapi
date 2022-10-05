@@ -1,15 +1,15 @@
 package me.gracenam.todoapi.task.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import me.gracenam.todoapi.task.dto.TaskDto;
-import me.gracenam.todoapi.task.dto.TaskSearchDto;
-import me.gracenam.todoapi.task.dto.TaskUpdateDto;
-import me.gracenam.todoapi.task.entity.Task;
+import me.gracenam.todoapi.task.dto.*;
+import me.gracenam.todoapi.task.exception.TaskValidException;
 import me.gracenam.todoapi.task.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,39 +20,53 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getTaskList() {
-        return ResponseEntity.ok(taskService.getTaskList());
-    }
+    public ResponseEntity findTaskList(TaskSearchDto taskSearchDto) {
 
-    @PostMapping
-    public ResponseEntity<List<Task>> createTask(@RequestBody TaskDto taskDto) {
+        List<TaskListDto> taskListDtos = taskService.findTaskList(taskSearchDto);
 
-        taskService.save(taskDto);
-
-        return ResponseEntity.ok(taskService.getTaskList());
+        return ResponseEntity.ok().body(taskListDtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> searchTask(@RequestBody TaskSearchDto taskSearchDto) {
-        taskService.findByContents(taskSearchDto);
+    public ResponseEntity findTask(@PathVariable Long id) {
+        TaskDto taskDto = taskService.findTask(id);
 
-        return ResponseEntity.ok(taskService.findByContents(taskSearchDto));
+        return ResponseEntity.ok().body(taskDto);
     }
 
+    @PostMapping
+    public ResponseEntity createTask(@RequestBody @Valid TaskInputDto taskInputDto,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new TaskValidException(bindingResult);
+        }
+
+        Long id = taskService.save(taskInputDto);
+
+        return ResponseEntity.ok().body(id);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@RequestBody TaskUpdateDto taskUpdateDto) {
+    public ResponseEntity updateTask(@PathVariable Long id,
+                                     @RequestBody TaskInputDto dto) {
 
-        taskService.update(taskUpdateDto.getId(), taskUpdateDto);
+        taskService.update(id, dto);
 
-        return ResponseEntity.ok(taskService.findById(taskUpdateDto.getId()));
+        return ResponseEntity.status(HttpStatus.FOUND).build();
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<List<Task>> deleteTask(@PathVariable Long id) {
+    @PatchMapping("/{id}")
+    public ResponseEntity updateObjective(@PathVariable Long id,
+                                          @RequestBody TaskUpdateDto dto) {
+        taskService.updateByObjective(id, dto);
 
-        taskService.delete(id);
+        return ResponseEntity.status(HttpStatus.FOUND).build();
+    }
 
-        return ResponseEntity.ok(taskService.getTaskList());
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteTask(@PathVariable Long id) {
+        taskService.deleteById(id);
+
+        return ResponseEntity.ok().build();
     }
 }

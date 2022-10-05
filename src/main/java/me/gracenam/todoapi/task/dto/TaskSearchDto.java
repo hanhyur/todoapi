@@ -1,15 +1,11 @@
 package me.gracenam.todoapi.task.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
+@ToString
 public class TaskSearchDto {
-
-    private Long id;
 
     private String contents;
 

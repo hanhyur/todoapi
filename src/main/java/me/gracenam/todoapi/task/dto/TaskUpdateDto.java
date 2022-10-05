@@ -1,24 +1,15 @@
 package me.gracenam.todoapi.task.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import me.gracenam.todoapi.task.entity.TaskStatus;
-import me.gracenam.todoapi.task.enums.TaskType;
+import lombok.*;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
+@ToString
+@Builder
 public class TaskUpdateDto {
 
-    private Long id;
+    private String objective;
 
-    private String title;
-
-    private String contents;
-
-    private TaskType taskType;
-
-    private TaskStatus taskStatus;
+    private String value;
 
 }

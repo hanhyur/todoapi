@@ -1,62 +1,73 @@
 package me.gracenam.todoapi.task.service;
 
 import lombok.RequiredArgsConstructor;
-import me.gracenam.todoapi.task.dto.TaskDto;
-import me.gracenam.todoapi.task.dto.TaskSearchDto;
-import me.gracenam.todoapi.task.dto.TaskUpdateDto;
+import me.gracenam.todoapi.task.dto.*;
 import me.gracenam.todoapi.task.entity.Task;
-import me.gracenam.todoapi.task.exception.TaskEmptyException;
+import me.gracenam.todoapi.task.enums.TaskStatus;
+import me.gracenam.todoapi.task.exception.TaskNotFoundException;
 import me.gracenam.todoapi.task.mapper.TaskMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
 
-    @Autowired
-    private TaskMapper taskMapper;
+    private final TaskMapper taskMapper;
 
-    public List<Task> getTaskList() {
-        List<Task> taskLists = taskMapper.findAll();
+    private final ModelMapper modelMapper;
 
-        return taskLists;
+    public List<TaskListDto> findTaskList(TaskSearchDto dto) {
+        List<TaskListDto> taskListDtos = taskMapper.findTaskList(dto);
+
+        return taskListDtos;
     }
 
-    public Task findById(Long id) {
-        Task task = taskMapper.findById(id)
-                .orElseThrow(() -> new TaskEmptyException(id));
+    public TaskDto findTask(Long id) {
+        Optional<TaskDto> taskDto = taskMapper.findById(id);
 
-        return task;
+        if (!taskDto.isPresent()) {
+            throw new TaskNotFoundException(id);
+        }
+
+        return taskDto.get();
     }
 
-    public Task findByContents(TaskSearchDto taskSearchDto) {
-        Task task = taskMapper.findByContents(taskSearchDto)
-                .orElseThrow(() -> new TaskEmptyException(taskSearchDto.getId()));
+    public Long save(TaskInputDto taskDto) {
+        Task task = modelMapper.map(taskDto, Task.class);
+        task.setStatus(TaskStatus.TODO.name());
 
-        return task;
+        taskMapper.insertTask(task);
+
+        return task.getId();
     }
 
+    public void update(Long id, TaskInputDto taskInputDto) {
+        Task task = modelMapper.map(taskInputDto, Task.class);
+        task.setId(id);
 
-    public void save(TaskDto taskDto) {
-        Task task = Task.builder()
-                .title(taskDto.getTitle())
-                .contents(taskDto.getContents())
-                .taskType(taskDto.getTaskType())
-                .taskStatus(taskDto.getTaskStatus())
-                .build();
-
-        taskMapper.save(task);
+        taskMapper.updateTask(task);
     }
 
-    public void update(Long id, TaskUpdateDto taskUpdateDto) {
-        taskMapper.update(id, taskUpdateDto);
+    public void updateByObjective(Long id, TaskUpdateDto taskUpdateDto) {
+
+        findTask(id);
+
+        if (taskUpdateDto.getObjective().equals("type")) {
+            taskMapper.updateTaskToType(id, taskUpdateDto.getValue());
+        } else if (taskUpdateDto.getObjective().equals("status")) {
+            taskMapper.updateTaskToStatus(id, taskUpdateDto.getValue());
+        }
+
     }
 
-    public void delete(Long id) {
-        taskMapper.delete(id);
+    public void deleteById(Long id) {
+        findTask(id);
+
+        taskMapper.deleteTask(id);
     }
 
 }

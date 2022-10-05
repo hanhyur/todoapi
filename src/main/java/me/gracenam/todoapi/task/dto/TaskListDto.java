@@ -1,28 +1,27 @@
 package me.gracenam.todoapi.task.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import me.gracenam.todoapi.task.enums.TaskStatus;
-import me.gracenam.todoapi.task.enums.TaskType;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Getter
 @Setter
-@Builder
 @ToString
-public class TaskDto {
+public class TaskListDto {
 
     private Long id;
 
     private String title;
 
-    private String contents;
-
     private String type;
 
     private String status;
+
+    private LocalDate registeredDate;
 
     public void setStatus(String status) {
         this.status = Arrays.stream(TaskStatus.values()).filter(item

@@ -1,11 +1,11 @@
 package me.gracenam.todoapi.task.mapper;
 
+import me.gracenam.todoapi.task.dto.TaskDto;
+import me.gracenam.todoapi.task.dto.TaskListDto;
 import me.gracenam.todoapi.task.dto.TaskSearchDto;
-import me.gracenam.todoapi.task.dto.TaskUpdateDto;
 import me.gracenam.todoapi.task.entity.Task;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,21 @@ import java.util.Optional;
 @Mapper
 public interface TaskMapper {
 
-    void save(Task task);
+    List<TaskListDto> findTaskList(TaskSearchDto taskSearchDto);
 
-    void update(@Param("id") Long id, @Param("updateParam") TaskUpdateDto taskUpdateDto);
+    Optional<TaskDto> findById(Long id);
 
-    @Select("select * from task")
-    List<Task> findAll();
+    int insertTask(Task task);
 
-    @Select("select * from task where id=#{id}")
-    Optional<Task> findById(Long id);
+    int updateTask(Task task);
 
-    Optional<Task> findByContents(@Param("searchParam") TaskSearchDto taskSearchDto);
+    void updateTaskToStatus(@Param("id") Long id, @Param("status") String status);
 
-    void delete(@Param("id") Long id);
+    void updateTaskToType(@Param("id") Long id, @Param("type") String type);
+
+    int deleteTask(Long id);
+
+
+
+
 }
