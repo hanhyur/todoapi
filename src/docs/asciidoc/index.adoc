@@ -21,22 +21,28 @@ include::{snippets}/createTask/http-request.adoc[]
 include::{snippets}/createTask/http-response.adoc[]
 
 [[Task_조회]]
-=== Task 조회
+=== Task 개별 조회
 ==== Request
-include::{snippets}/createTask/http-request.adoc[]
+include::{snippets}/findTask/http-request.adoc[]
 ==== Response
-include::{snippets}/createTask/http-response.adoc[]
+include::{snippets}/findTask/http-response.adoc[]
+
+=== Task 전체 조회
+==== Request
+include::{snippets}/findTaskList/http-request.adoc[]
+==== Response
+include::{snippets}/findTaskList/http-response.adoc[]
 
 [[Task_수정]]
 === Task 수정
 ==== Request
-include::{snippets}/createTask/http-request.adoc[]
+include::{snippets}/updateTask/http-request.adoc[]
 ==== Response
-include::{snippets}/createTask/http-response.adoc[]
+include::{snippets}/updateTask/http-response.adoc[]
 
 [[Task_삭제]]
 === Task 삭제
 ==== Request
-include::{snippets}/createTask/http-request.adoc[]
+include::{snippets}/deleteTask/http-request.adoc[]
 ==== Response
-include::{snippets}/createTask/http-response.adoc[]
+include::{snippets}/deleteTask/http-response.adoc[]

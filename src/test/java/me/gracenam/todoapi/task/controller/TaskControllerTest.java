@@ -89,6 +89,7 @@ class TaskControllerTest {
         mockMvc.perform(get("/api/todo")
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
+                .andDo(document("findTaskList"))
                 .andExpect(status().isOk());
     }
 
@@ -105,6 +106,7 @@ class TaskControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
+                .andDo(document("updateTask"))
                 .andExpect(status().is3xxRedirection());
     }
 
@@ -155,6 +157,7 @@ class TaskControllerTest {
 
         mockMvc.perform(delete("/api/todo/{id}", 25))
                 .andDo(print())
+                .andDo(document("deleteTask"))
                 .andExpect(status().isOk());
     }
 
