@@ -86,6 +86,10 @@ public class TicketController {
     public ResponseEntity updateObjective(@PathVariable Long id,
                                           @RequestBody TicketUpdateDto dto) {
         ticketService.updateByObjective(id, dto);
+        TicketDto ticketDto = ticketService.findTicket(id);
+
+        TicketResource ticketResource = new TicketResource(ticketDto);
+        ticketResource.add(linkTo(TicketController.class).withRel("ticketList"));
 
         return ResponseEntity.status(HttpStatus.FOUND).build();
     }
