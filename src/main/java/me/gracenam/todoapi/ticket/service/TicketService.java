@@ -9,6 +9,7 @@ import me.gracenam.todoapi.ticket.mapper.TicketMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class TicketService {
         return dto.get();
     }
 
+    @Transactional
     public Long save(TicketInputDto dto) {
         Ticket ticket = modelMapper.map(dto, Ticket.class);
         ticket.setStatus(TicketStatus.TODO.name());
@@ -45,6 +47,7 @@ public class TicketService {
         return ticket.getId();
     }
 
+    @Transactional
     public void update(Long id, TicketInputDto dto) {
         Ticket ticket = modelMapper.map(dto, Ticket.class);
         ticket.setId(id);
@@ -52,6 +55,7 @@ public class TicketService {
         ticketMapper.updateTicket(ticket);
     }
 
+    @Transactional
     public void updateByObjective(Long id, TicketUpdateDto dto) {
         findTicket(id);
 
@@ -63,6 +67,7 @@ public class TicketService {
 
     }
 
+    @Transactional
     public void deleteById(Long id) {
         findTicket(id);
 
