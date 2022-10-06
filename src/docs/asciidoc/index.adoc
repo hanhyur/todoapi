@@ -20,6 +20,14 @@ endif::[]
 === 구상
 기본적으로 칸반보드를 생각하고 API를 구상하였고 하나의 ToDo, 할 일을 하나의 티켓으로 만드는 식으로 구상하였습니다.
 
+=== 사용 기술
+- Spring Boot
+- H2 database
+- Mybatis
+- Spring Hateoas
+- REST Docs
+- JUnit5
+
 == ToDo API
 
 [[Ticket_생성]]
