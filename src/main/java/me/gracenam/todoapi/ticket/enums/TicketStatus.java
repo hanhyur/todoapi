@@ -1,6 +1,6 @@
-package me.gracenam.todoapi.task.enums;
+package me.gracenam.todoapi.ticket.enums;
 
-public enum TaskStatus {
+public enum TicketStatus {
 
     TODO("해야 함"),
     DOING("하는 중"),
@@ -8,7 +8,7 @@ public enum TaskStatus {
 
     private String value;
 
-    TaskStatus(String value) {
+    TicketStatus(String value) {
         this.value = value;
     }
 

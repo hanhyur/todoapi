@@ -1,9 +1,9 @@
-package me.gracenam.todoapi.task.dto;
+package me.gracenam.todoapi.ticket.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import me.gracenam.todoapi.task.enums.TaskStatus;
+import me.gracenam.todoapi.ticket.enums.TicketStatus;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Getter
 @Setter
 @ToString
-public class TaskListDto {
+public class TicketListDto {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class TaskListDto {
     private LocalDate registeredDate;
 
     public void setStatus(String status) {
-        this.status = Arrays.stream(TaskStatus.values()).filter(item
+        this.status = Arrays.stream(TicketStatus.values()).filter(item
                         -> item.name().equals(status))
                 .findAny().get().getValue();
     }

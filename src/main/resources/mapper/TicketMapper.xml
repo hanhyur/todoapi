@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.gracenam.todoapi.task.mapper.TaskMapper">
+<mapper namespace="me.gracenam.todoapi.ticket.mapper.TicketMapper">
 
-    <select id="findTaskList" resultType="TaskListDto">
-        select * from task
+    <select id="findTicketList" resultType="TicketListDto">
+        select * from ticket
         <where>
             <if test="contents != null">
                 contents like concat('%', #{contents}, '%')
@@ -11,37 +11,37 @@
         </where>
     </select>
 
-    <select id="findById" resultType="TaskDto">
-        select * from task
+    <select id="findById" resultType="TicketDto">
+        select * from ticket
         where id = #{id}
     </select>
 
-    <insert id="insertTask" useGeneratedKeys="true" keyProperty="id">
-        insert into task (title, contents, type, status, registered_date)
+    <insert id="insertTicket" useGeneratedKeys="true" keyProperty="id">
+        insert into ticket (title, contents, type, status, registered_date)
         values (#{title}, #{contents}, #{type}, #{status}, now())
     </insert>
 
-    <update id="updateTask">
-        update task
+    <update id="updateTicket">
+        update ticket
         set title = #{title},
             contents = #{contents}
         where id = #{id}
     </update>
 
-    <update id="updateTaskToStatus">
-        update task
+    <update id="updateTicketToStatus">
+        update ticket
         set status = #{status}
         where id = #{id}
     </update>
 
-    <update id="updateTaskToType">
-        update task
+    <update id="updateTicketToType">
+        update ticket
         set type = #{type}
         where id = #{id}
     </update>
 
-    <delete id="deleteTask">
-        delete from task where id = #{id}
+    <delete id="deleteTicket">
+        delete from ticket where id = #{id}
     </delete>
 
 </mapper>

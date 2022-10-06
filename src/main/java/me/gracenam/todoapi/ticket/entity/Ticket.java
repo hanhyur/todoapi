@@ -1,8 +1,6 @@
-package me.gracenam.todoapi.task.entity;
+package me.gracenam.todoapi.ticket.entity;
 
 import lombok.*;
-import me.gracenam.todoapi.task.enums.TaskStatus;
-import me.gracenam.todoapi.task.enums.TaskType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,8 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "ticket")
+public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

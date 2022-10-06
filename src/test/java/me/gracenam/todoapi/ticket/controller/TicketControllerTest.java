@@ -1,12 +1,12 @@
-package me.gracenam.todoapi.task.controller;
+package me.gracenam.todoapi.ticket.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.gracenam.todoapi.task.dto.TaskInputDto;
-import me.gracenam.todoapi.task.dto.TaskSearchDto;
-import me.gracenam.todoapi.task.dto.TaskUpdateDto;
-import me.gracenam.todoapi.task.enums.TaskStatus;
-import me.gracenam.todoapi.task.enums.TaskType;
-import me.gracenam.todoapi.task.service.TaskService;
+import me.gracenam.todoapi.ticket.dto.TicketInputDto;
+import me.gracenam.todoapi.ticket.dto.TicketSearchDto;
+import me.gracenam.todoapi.ticket.dto.TicketUpdateDto;
+import me.gracenam.todoapi.ticket.enums.TicketStatus;
+import me.gracenam.todoapi.ticket.enums.TicketType;
+import me.gracenam.todoapi.ticket.service.TicketService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,49 +25,49 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class TaskControllerTest {
+class TicketControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
-    TaskService taskService;
+    TicketService ticketService;
 
     @Autowired
     ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("Task 등록 테스트")
-    public void createTaskTest() throws Exception {
-        TaskInputDto taskInput = getTaskInputDto();
+    @DisplayName("Ticket 등록 테스트")
+    public void createTicketTest() throws Exception {
+        TicketInputDto inputDto = getTicketInputDto();
 
         mockMvc.perform(post("/api/todo")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(taskInput)))
+                        .content(objectMapper.writeValueAsString(inputDto)))
                 .andDo(print())
-                .andDo(document("createTask"))
+                .andDo(document("createTicket"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Task 조회 테스트")
-    public void findTaskTest() throws Exception {
+    @DisplayName("Ticket 조회 테스트")
+    public void findTicketTest() throws Exception {
 
-        TaskInputDto taskInput = getTaskInputDto();
+        TicketInputDto inputDto = getTicketInputDto();
 
-        Long id = taskService.save(taskInput);
+        Long id = ticketService.save(inputDto);
 
         mockMvc.perform(get("/api/todo/{id}", id))
                 .andDo(print())
-                .andDo(document("findTask"))
+                .andDo(document("findTicket"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("title").value("Test Task"))
-                .andExpect(jsonPath("contents").value("This Task is Testing Content"));
+                .andExpect(jsonPath("title").value("Test Ticket"))
+                .andExpect(jsonPath("contents").value("This Ticket is Testing Content"));
     }
 
     @Test
-    @DisplayName("없는 Task 조회")
-    public void findTaskTest_NotFound() throws Exception {
+    @DisplayName("없는 Ticket 조회")
+    public void findTicketTest_NotFound() throws Exception {
         // When & Then
         this.mockMvc.perform(get("/api/todo/{id}", 99999))
                 .andDo(print())
@@ -76,49 +76,49 @@ class TaskControllerTest {
     }
 
     @Test
-    @DisplayName("Task 목록 조회 테스트")
-    public void findTaskListTest() throws Exception {
+    @DisplayName("Ticket 목록 조회 테스트")
+    public void findTicketListTest() throws Exception {
         for (int i = 1; i <= 100; i++) {
-            TaskInputDto taskInput = getTaskInputDto(i);
-            taskService.save(taskInput);
+            TicketInputDto inputDto = TicketControllerTest.getTicketInputDto(i);
+            ticketService.save(inputDto);
         }
 
-        TaskSearchDto dto = new TaskSearchDto();
+        TicketSearchDto dto = new TicketSearchDto();
         dto.setContents("Testing");
 
         mockMvc.perform(get("/api/todo")
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
-                .andDo(document("findTaskList"))
+                .andDo(document("findTicketList"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Task 수정 테스트")
-    public void updateTaskTest() throws Exception {
-        TaskInputDto dto = getTaskInputDto();
-        Long id = taskService.save(dto);
+    @DisplayName("Ticket 수정 테스트")
+    public void updateTicketTest() throws Exception {
+        TicketInputDto dto = getTicketInputDto();
+        Long id = ticketService.save(dto);
 
-        dto.setTitle("task update test");
+        dto.setTitle("Ticket update test");
         dto.setContents("this content is updated");
 
         mockMvc.perform(put("/api/todo/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
-                .andDo(document("updateTask"))
+                .andDo(document("updateTicket"))
                 .andExpect(status().is3xxRedirection());
     }
 
     @Test
-    @DisplayName("Task 상태 수정 테스트")
+    @DisplayName("Ticket 상태 수정 테스트")
     public void updateStatusTest() throws Exception {
-        TaskInputDto dto = getTaskInputDto();
-        Long id = taskService.save(dto);
+        TicketInputDto dto = getTicketInputDto();
+        Long id = ticketService.save(dto);
 
-        TaskUpdateDto updateDto = TaskUpdateDto.builder()
+        TicketUpdateDto updateDto = TicketUpdateDto.builder()
                 .objective("status")
-                .value(TaskStatus.DOING.name())
+                .value(TicketStatus.DOING.name())
                 .build();
 
         mockMvc.perform(patch("/api/todo/{id}", id)
@@ -129,14 +129,14 @@ class TaskControllerTest {
     }
 
     @Test
-    @DisplayName("Task 타입 수정 테스트")
+    @DisplayName("Ticket 타입 수정 테스트")
     public void updateTypeTest() throws Exception {
-        TaskInputDto dto = getTaskInputDto();
-        Long id = taskService.save(dto);
+        TicketInputDto dto = getTicketInputDto();
+        Long id = ticketService.save(dto);
 
-        TaskUpdateDto updateDto = TaskUpdateDto.builder()
+        TicketUpdateDto updateDto = TicketUpdateDto.builder()
                 .objective("type")
-                .value(TaskType.HOBBY.name())
+                .value(TicketType.HOBBY.name())
                 .build();
 
         mockMvc.perform(patch("/api/todo/{id}", id)
@@ -147,35 +147,35 @@ class TaskControllerTest {
     }
 
     @Test
-    @DisplayName("Task 삭제 테스트")
-    public void deleteTaskMockTest() throws Exception {
+    @DisplayName("Ticket 삭제 테스트")
+    public void deleteTicketMockTest() throws Exception {
 
         for(int i = 1; i <= 50; i++){
-            TaskInputDto dto = getTaskInputDto(i);
-            taskService.save(dto);
+            TicketInputDto dto = TicketControllerTest.getTicketInputDto(i);
+            ticketService.save(dto);
         }
 
         mockMvc.perform(delete("/api/todo/{id}", 25))
                 .andDo(print())
-                .andDo(document("deleteTask"))
+                .andDo(document("deleteTicket"))
                 .andExpect(status().isOk());
     }
 
-    private static TaskInputDto getTaskInputDto() {
-        TaskInputDto dto = TaskInputDto.builder()
-                .title("Test Task")
-                .contents("This Task is Testing Content")
-                .type(TaskType.WORK.name())
+    private static TicketInputDto getTicketInputDto() {
+        TicketInputDto dto = TicketInputDto.builder()
+                .title("Test Ticket")
+                .contents("This Ticket is Testing Content")
+                .type(TicketType.WORK.name())
                 .build();
 
         return dto;
     }
 
-    private static TaskInputDto getTaskInputDto(int index) {
-        TaskInputDto dto = TaskInputDto.builder()
-                .title("Test Task")
-                .contents("This Task is Testing Content " + index)
-                .type(TaskType.WORK.name())
+    private static TicketInputDto getTicketInputDto(int index) {
+        TicketInputDto dto = TicketInputDto.builder()
+                .title("Test Ticket")
+                .contents("This Ticket is Testing Content " + index)
+                .type(TicketType.WORK.name())
                 .build();
 
         return dto;

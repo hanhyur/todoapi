@@ -1,4 +1,4 @@
-package me.gracenam.todoapi.task.dto;
+package me.gracenam.todoapi.ticket.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Builder
-public class TaskInputDto {
+public class TicketInputDto {
 
     @NotBlank(message = "제목을 입력하세요")
     private String title;

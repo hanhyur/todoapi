@@ -1,4 +1,4 @@
-package me.gracenam.todoapi.task.dto;
+package me.gracenam.todoapi.ticket.dto;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class TaskUpdateDto {
+public class TicketUpdateDto {
 
     private String objective;
 

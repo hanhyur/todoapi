@@ -1,4 +1,4 @@
-package me.gracenam.todoapi.task.exception;
+package me.gracenam.todoapi.ticket.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,9 @@ import org.springframework.validation.BindingResult;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TaskValidException extends RuntimeException {
+public class TicketValidException extends RuntimeException {
 
-    public TaskValidException(BindingResult result) {
+    public TicketValidException(BindingResult result) {
         super(messageParse(result));
     }
 

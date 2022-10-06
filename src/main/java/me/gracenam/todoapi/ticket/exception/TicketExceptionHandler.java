@@ -1,4 +1,4 @@
-package me.gracenam.todoapi.task.exception;
+package me.gracenam.todoapi.ticket.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class TaskExceptionHandler{
+public class TicketExceptionHandler {
 
-    @ExceptionHandler(TaskNotFoundException.class)
+    @ExceptionHandler(TicketNotFoundException.class)
     public ResponseEntity notFoundErrorHandler(RuntimeException e){
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler(TaskValidException.class)
+    @ExceptionHandler(TicketValidException.class)
     public ResponseEntity badRequestErrorHandler(RuntimeException e){
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

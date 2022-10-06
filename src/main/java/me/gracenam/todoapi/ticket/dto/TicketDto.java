@@ -1,18 +1,15 @@
-package me.gracenam.todoapi.task.dto;
+package me.gracenam.todoapi.ticket.dto;
 
 import lombok.*;
-import me.gracenam.todoapi.task.enums.TaskStatus;
-import me.gracenam.todoapi.task.enums.TaskType;
+import me.gracenam.todoapi.ticket.enums.TicketStatus;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.Arrays;
 
 @Getter
 @Setter
 @Builder
 @ToString
-public class TaskDto {
+public class TicketDto {
 
     private Long id;
 
@@ -25,7 +22,7 @@ public class TaskDto {
     private String status;
 
     public void setStatus(String status) {
-        this.status = Arrays.stream(TaskStatus.values()).filter(item
+        this.status = Arrays.stream(TicketStatus.values()).filter(item
                         -> item.name().equals(status))
                 .findAny().get().getValue();
     }

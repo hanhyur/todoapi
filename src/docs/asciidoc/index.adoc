@@ -13,10 +13,10 @@ endif::[]
 [[ToDo]]
 == ToDo API
 
-[[Task_생성]]
-=== Task 생성
+[[ticket_생성]]
+=== ticket 생성
 ==== Request
-include::{snippets}/createTask/http-request.adoc[]
+include::{snippets}/createTicket/http-request.adoc[]
 ==== Response
 include::{snippets}/createTask/http-response.adoc[]
 
