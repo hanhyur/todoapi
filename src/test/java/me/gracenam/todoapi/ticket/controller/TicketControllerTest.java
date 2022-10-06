@@ -167,7 +167,7 @@ class TicketControllerTest {
         mockMvc.perform(delete("/api/todo/{id}", 25))
                 .andDo(print())
                 .andDo(document("deleteTicket"))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
     private static TicketInputDto getTicketInputDto() {

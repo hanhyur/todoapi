@@ -98,6 +98,6 @@ public class TicketController {
     public ResponseEntity deleteTicket(@PathVariable Long id) {
         ticketService.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
