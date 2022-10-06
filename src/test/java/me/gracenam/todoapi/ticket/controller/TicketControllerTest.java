@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -45,8 +47,13 @@ class TicketControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inputDto)))
                 .andDo(print())
-                .andDo(document("createTicket"))
-                .andExpect(status().isOk());
+                .andDo(document("createTicket",
+                        links(
+                                linkWithRel("self").description("task create api")
+                        )))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("_links.self").exists())
+        ;
     }
 
     @Test
@@ -106,8 +113,10 @@ class TicketControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(jsonPath("_links.self").exists())
                 .andDo(document("updateTicket"))
-                .andExpect(status().is3xxRedirection());
+        ;
     }
 
     @Test
@@ -150,7 +159,7 @@ class TicketControllerTest {
     @DisplayName("Ticket 삭제 테스트")
     public void deleteTicketMockTest() throws Exception {
 
-        for(int i = 1; i <= 50; i++){
+        for (int i = 1; i <= 50; i++) {
             TicketInputDto dto = TicketControllerTest.getTicketInputDto(i);
             ticketService.save(dto);
         }
@@ -158,7 +167,7 @@ class TicketControllerTest {
         mockMvc.perform(delete("/api/todo/{id}", 25))
                 .andDo(print())
                 .andDo(document("deleteTicket"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     private static TicketInputDto getTicketInputDto() {

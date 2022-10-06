@@ -11,38 +11,47 @@ ifndef::snippets[]
 endif::[]
 
 [[ToDo]]
+== 개요
+
+[[API_소개]]
+=== API 소개
+이 API는 ToDo 리스트의 기본적인 기능(CRUD)을 목표로 작성되었습니다.
+
+=== 구상
+기본적으로 칸반보드를 생각하고 API를 구상하였고 하나의 ToDo, 할 일을 하나의 티켓으로 만드는 식으로 구상하였습니다.
+
 == ToDo API
 
-[[ticket_생성]]
-=== ticket 생성
+[[Ticket_생성]]
+=== Ticket 생성
 ==== Request
 include::{snippets}/createTicket/http-request.adoc[]
 ==== Response
-include::{snippets}/createTask/http-response.adoc[]
+include::{snippets}/createTicket/http-response.adoc[]
 
-[[Task_조회]]
-=== Task 개별 조회
+[[Ticket_조회]]
+=== Ticket 개별 조회
 ==== Request
-include::{snippets}/findTask/http-request.adoc[]
+include::{snippets}/findTicket/http-request.adoc[]
 ==== Response
-include::{snippets}/findTask/http-response.adoc[]
+include::{snippets}/findTicket/http-response.adoc[]
 
-=== Task 전체 조회
+=== Ticket 전체 조회
 ==== Request
-include::{snippets}/findTaskList/http-request.adoc[]
+include::{snippets}/findTicketList/http-request.adoc[]
 ==== Response
-include::{snippets}/findTaskList/http-response.adoc[]
+include::{snippets}/findTicketList/http-response.adoc[]
 
-[[Task_수정]]
-=== Task 수정
+[[Ticket_수정]]
+=== Ticket 수정
 ==== Request
-include::{snippets}/updateTask/http-request.adoc[]
+include::{snippets}/updateTicket/http-request.adoc[]
 ==== Response
-include::{snippets}/updateTask/http-response.adoc[]
+include::{snippets}/updateTicket/http-response.adoc[]
 
-[[Task_삭제]]
-=== Task 삭제
+[[Ticket_삭제]]
+=== Ticket 삭제
 ==== Request
-include::{snippets}/deleteTask/http-request.adoc[]
+include::{snippets}/deleteTicket/http-request.adoc[]
 ==== Response
-include::{snippets}/deleteTask/http-response.adoc[]
+include::{snippets}/deleteTicket/http-response.adoc[]
