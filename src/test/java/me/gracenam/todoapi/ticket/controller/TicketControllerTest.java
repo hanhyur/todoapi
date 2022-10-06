@@ -16,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -47,10 +45,7 @@ class TicketControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(inputDto)))
                 .andDo(print())
-                .andDo(document("createTicket",
-                        links(
-                                linkWithRel("self").description("task create api")
-                        )))
+                .andDo(document("createTicket"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("_links.self").exists())
         ;
@@ -114,7 +109,6 @@ class TicketControllerTest {
                         .content(objectMapper.writeValueAsString(dto)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(jsonPath("_links.self").exists())
                 .andDo(document("updateTicket"))
         ;
     }
